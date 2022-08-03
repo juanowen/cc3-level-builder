@@ -1,0 +1,12 @@
+{
+    "rootData": [],
+    "layersData": [],
+
+    "rootSchema": [],
+    "elementSchemas": [],
+    
+    "paths": {
+        "assets": "./assets",
+        "enums": "./assets/scripts/Enums"
+    }
+}

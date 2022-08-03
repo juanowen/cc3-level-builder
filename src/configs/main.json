@@ -1,0 +1,39 @@
+{
+    "anyTypes": [
+        "String",
+        "Number",
+        "Boolean",
+        "Enum",
+        "Object",
+        "Array"
+    ],
+    "tileModes": {
+        "select": "select",
+        "move": "move",
+        "add": "add",
+        "erase": "erase"
+    },
+    "defaultTileData": {
+        "select": {
+            "name": "Select mode",
+            "data": { "name": "#select mode", "tooltip": "Use it to select tile by click on it" }
+        },
+        "move": {
+            "name": "Move mode",
+            "data": { "name": "#move mode", "tooltip": "Use it to move tiles by click and drop" }
+        },
+        "erase": {
+            "name": "Erase mode",
+            "data": { "name": "#eraser mode", "tooltip": "Use it to remove tiles from layer" }
+        }
+    },
+    "errorImg": "../static/template/default/img/404.jpg",
+
+    "paths": {
+        "assets": "/assets",
+        "enums": "/assets/scripts/Enums"
+    },
+    "layers": [],
+    "elementSchemas": [],
+    "rootSchema": []
+}

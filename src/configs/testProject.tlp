@@ -1,0 +1,71 @@
+{
+    "rootData": [
+        { "name": "first prop", "type": "triple", "value": { "a": 3, "b": -4, "c": 7 } },
+        { "name": "second prop", "type": "array", "value": [ "test", 3, false ] },
+        { "name": "third prop", "type": "object", "value": { "string": "test", "number": 3, "boolean": false } }
+    ],
+    "layersData": [
+        { 
+            "name": "level", 
+            "title": "Level layer", 
+            "icon": "gg-qr", 
+            "map": [
+                {
+                    "type": "wall",
+                    "position": { "x": 1, "y": 1 },
+                    "properties": []
+                },
+                {
+                    "type": "wall",
+                    "position": { "x": 2, "y": 1 },
+                    "properties": []
+                },
+                {
+                    "type": "wall",
+                    "position": { "x": 3, "y": 1 },
+                    "properties": []
+                }
+            ] 
+        },
+        { 
+            "name": "objects", 
+            "title": "Objects layer", 
+            "icon": "gg-ghost-character", 
+            "map": [] 
+        }
+    ],
+
+    "rootSchema": [
+        { "name": "first prop", "type": "triple" },
+        { "name": "second prop", "type": "array" },
+        { "name": "third prop", "type": "object" }
+    ],
+    "elementSchemas": [
+        {
+            "name": "wall",
+            "layer": "level",
+            "img": "images/tiles/wall.png",
+            "tooltip": "wall tile",
+            "properties": []
+        },
+        {
+            "name": "brick",
+            "layer": "level",
+            "img": "images/tiles/crate.png",
+            "tooltip": "brick tile",
+            "properties": []
+        },
+        {
+            "name": "brick",
+            "layer": "objects",
+            "img": "images/tiles/crate.png",
+            "tooltip": "brick tile",
+            "properties": []
+        }
+    ],
+    
+    "paths": {
+        "assets": "./assets",
+        "enums": "./assets/scripts/Enums"
+    }
+}

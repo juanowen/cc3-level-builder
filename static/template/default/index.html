@@ -1,0 +1,115 @@
+<div>
+    <div id="app" :class="appClassObject">
+        <div :class="{ workplace: true, activeGrid: states.gridIsActive, activeFieldBorders: states.fieldBordersIsActive }" ref="workplace" @mousemove="onMouseMove" @mousedown="onMouseDown" @mouseup="onMouseUp">
+            <div class="layerHolder" :class="{ processing: current.layer }">
+                <layer-div v-for="layer in layers" :layer="layer"></layer-div>    
+                <div class="pointer" :class="currentTile ? currentTile.mode : 'default'">
+                    <div></div>
+                </div>
+                <div class="currentTileFrame" v-if="tileSelector">
+                </div>
+            </div>
+        </div>
+        <div :class="{ gridData: true, activeGrid: states.gridIsActive, activeFieldBorders: states.fieldBordersIsActive }">
+            <span>x:</span>
+            <span>{{pointer.x}}</span>
+            <span>y:</span>
+            <span>{{pointer.y}}</span>
+            <button class="gridToggleButton" title="Toggle grid" @click="toggleGrid">
+                <i class="gg gg-menu-grid-r"></i>
+            </button>
+            <button class="fieldBordersButton" title="Toggle field borders" @click="toggleFieldBorders">
+                <i class="gg gg-maximize"></i>
+            </button>
+            <button class="scrollToCenterButton" title="Go to center" @click="scrollToCenter">
+                <i class="gg gg-track"></i>
+            </button>
+        </div>
+        <div class="header">
+            <div id="openButton" title="Open project..." @click="openProject">
+                <i class="gg gg-inbox"></i>
+            </div>
+            <span>{{project.name}}</span>
+            <div class="zoomer">
+                <div class="zoomButton" title="Zoom out" @click="toggleZoom(false)">
+                    <i class="gg gg-math-minus"></i>
+                </div>
+                <span>{{fieldZoom}}</span>
+                <div class="zoomButton" title="Zoom in" @click="toggleZoom(true)">
+                    <i class="gg gg-math-plus"></i>
+                </div>
+            </div>
+            <button id="saveButton" title="Save changes" @click="toggleExportPopup">    
+                <i class="gg gg-software-download"></i>
+                Save
+            </button>
+            <div id="settingsButton" title="Settings...">
+                <i class="gg gg-more-vertical-alt"></i>
+            </div>
+        </div>
+        <div class="leftPanel">
+            <div class="tabs" ref="tabs" @click="changeTab">
+                <div class="settingsTab" :class="{ current: current.tab === 'settingsTab' }" title="Settings">
+                    <i class="gg gg-info"></i>
+                </div>
+                <layer-tab-label v-for="layer in layers" :layer="layer"></layer-tab-label>
+            </div>
+            <div class="plot">
+                <div class="head settingsTab" v-if="current.layer === null">
+                    <div class="inputField">
+                        <span title="Size of tile">Tile size</span>
+                        <div class="value double">
+                            <input type="number" v-model="style.cell.width" title="width">
+                            <input type="number" v-model="style.cell.height" title="height">
+                        </div>
+                    </div>
+                    <toolbox></toolbox>
+                </div>
+                <div class="body settingsTab" v-if="current.layer === null">
+                    <component v-if="states.layerListMode" v-for="model in rootData" :model="model" :is="model.field"></component>
+                    <component v-if="!states.layerListMode && current.rootProp" :model="current.rootProp" :is="current.rootProp.field"></component>
+                    <p v-if="!states.layerListMode && !current.rootProp">Select property from selectbox above.</p>
+                </div>
+
+                <div class="head" v-if="current.layer !== null">
+                    <div class="tileSelector" @click="toggleRightPanel">
+                        <div class="tileImage">
+                            <i v-if="currentTile.mode === configs.tileModes.select" class="gg gg-maximize"></i>
+                            <i v-if="currentTile.mode === configs.tileModes.move" class="gg gg-controller"></i>
+                            <i v-if="currentTile.mode === configs.tileModes.erase" class="gg gg-erase"></i>
+                            <div v-if="currentTile.mode === configs.tileModes.add"></div>
+                        </div>
+                        <span title="Click to change mode" :class="{ addMode: currentTile.mode === configs.tileModes.add }"></span>
+                        <strong>{{currentTile.name}}</strong>
+                        <i class="gg gg-chevron-right"></i>
+                    </div>
+                    <toolbox></toolbox>
+                </div>
+                <div class="body layerTab" v-if="current.layer !== null">
+                    <layer-element v-if="states.layerListMode" v-for="model in this.current.layer.data.map" :model="model"></layer-element>
+                    <layer-element v-if="!states.layerListMode && current.tile" :model="current.tile"></layer-element>
+                    <p v-if="!states.layerListMode && !current.tile">Select tile from selectbox above or click on tile in right field using select mode.</p>
+                </div>
+            </div>
+        </div>
+        <div v-if="current.layer" class="rightPanel">
+            <div class="tileList">
+                <tile-type-plate v-for="schema in current.layer.schemas" :model="schema"></tile-type-plate>
+            </div>
+        </div>
+        <div class="exportPopup">
+            <button class="main" @click="exportProject">Save project</button>
+            <hr v-if="exportMethods.length">
+            <div class="smartSaveToggler" @click="toggleSmartSaveMode" title="In smart save mode the program will overwrite only the parameters of the same name in the file and not the contents of the entire file" v-if="exportMethods.length">
+                <i class="gg" :class="{ 'gg-toggle-on': !states.smartSaveMode, 'gg-toggle-off': states.smartSaveMode }"></i>
+                <span>Use smart save mode</span>
+            </div>
+            <hr v-if="exportMethods.length">
+            <export-button v-for="method in exportMethods" :model="method"></export-button>
+        </div>
+        <div class="loadingPlate">
+            <i class="gg gg-loadbar-doc"></i>
+            <span>Please, wait...</span>
+        </div>
+    </div>
+</div>
