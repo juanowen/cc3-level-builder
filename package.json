@@ -1,59 +1,8 @@
 {
-    "package_version": 2,
-    "version": "1.0.0",
-    "name": "level-builder",
-    "description": "i18n:level-builder.description",
-    "main": "./dist/main.js",
-    "dependencies": {
-        "vue": "^2.6.14"
-    },
-    "devDependencies": {
-        "@types/node": "^16.0.1",
-        "typescript": "^4.3.4"
-    },
-    "panels": {
-        "default": {
-            "title": "Level builder",
-            "type": "simple",
-            "main": "src/default.js",
-            "size": {
-                "min-width": 400,
-                "min-height": 300,
-                "width": 1024,
-                "height": 600
-            }
-        }
-    },
-    "contributions": {
-        "menu": [
-            {
-                "path": "Level builder",
-                "label": "i18n:level-builder.open_panel",
-                "message": "open-panel"
-            },
-            {
-                "path": "i18n:menu.develop/Level builder",
-                "label": "i18n:level-builder.send_to_panel",
-                "message": "send-to-panel"
-            }
-        ],
-        "messages": {
-            "open-panel": {
-                "methods": [
-                    "openPanel"
-                ]
-            },
-            "send-to-panel": {
-                "methods": [
-                    "default.hello"
-                ]
-            }
-        }
-    },
-    "author": "aprioriplace",
-    "editor": ">=3.4.1",
-    "scripts": {
-        "build": "tsc -b",
-        "watch": "tsc -w"
-    }
+  "name": "level_builder_test",
+  "uuid": "6a1a1c95-a3cc-4ea3-bb25-d92f404e6e10",
+  "version": "3.5.1",
+  "creator": {
+    "version": "3.5.1"
+  }
 }
